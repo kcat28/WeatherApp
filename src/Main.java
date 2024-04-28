@@ -11,7 +11,7 @@ public class Main {
 
                 //System.out.println(WeatherApp.getLocationData("Manila"));
 
-               // System.out.println(WeatherApp.getCurrentTime());
+                System.out.println(WeatherApp.getCurrentTime());
             }
         });
     }

@@ -9,7 +9,9 @@ public class Main {
                 new WeatherAppGUI().setVisible(true);
 
 
-                System.out.println(WeatherApp.getLocationData("Tokyo"));
+                //System.out.println(WeatherApp.getLocationData("Manila"));
+
+               // System.out.println(WeatherApp.getCurrentTime());
             }
         });
     }

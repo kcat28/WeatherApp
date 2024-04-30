@@ -68,6 +68,22 @@ public class WeatherApp {
             JSONArray weathercode = (JSONArray) hourly.get("weathercode");
             String weatherCondition = convertWeatherCode((long) weathercode.get(index));
 
+            // get humidity
+            JSONArray relativeHumidity = (JSONArray) hourly.get("relativehumidity_2m");
+            long humidity =(long) relativeHumidity.get(index);
+
+            //get windspeed
+            JSONArray windspeedData = (JSONArray) hourly.get("windspeed_10m");
+            double windspeed = (double) windspeedData.get(index);
+
+            // weather JSON DATA OBJECTS -> GUI
+            JSONObject weatherData = new JSONObject();
+            weatherData.put("temperature", temperature);
+            weatherData.put("weather_condition", weatherCondition);
+            weatherData.put("humidity", humidity);
+            weatherData.put("windspeed", windspeed);
+
+            return  weatherData;
 
 
         } catch (Exception e){
@@ -82,7 +98,7 @@ public class WeatherApp {
         locationName = locationName.replaceAll(" ", "+");
 
         //Api Call
-        String URLstring = "https://geocoding-api.open-meteo.com/v1/search?name="+locationName+"&count=10&language=en&format=json";
+        String URLstring = "https://geocoding-api.open-meteo.com/v1/search?name="+ locationName +"&count=10&language=en&format=json";
 
         try{
             //callAPIResponse
@@ -173,20 +189,22 @@ public class WeatherApp {
 
     private static String convertWeatherCode(long weathercode){
         String weatherCondition = "";
-        if (weathercode == 0L){
+        if(weathercode == 0L){
+            // clear
             weatherCondition = "Clear";
-
-        } else if (weathercode <= 3L && weathercode > 0L){
+        }else if(weathercode > 0L && weathercode <= 3L){
+            // cloudy
             weatherCondition = "Cloudy";
-        } else if ((weathercode >= 51L && weathercode <= 67L)
-               ||(weathercode >= 80L && weathercode <= 99L)){
+        }else if((weathercode >= 51L && weathercode <= 67L)
+                || (weathercode >= 80L && weathercode <= 99L)){
+            // rain
             weatherCondition = "Rain";
-        } else if (weathercode >= 71L && weathercode <= 77L){
+        }else if(weathercode >= 71L && weathercode <= 77L){
+            // snow
             weatherCondition = "Snow";
         }
 
         return weatherCondition;
-
 
 
     }
